@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<!-- saved from url=(0049)http://simplyapps.nl/MagisterJS/tryout/index.html -->
+<html>
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  <title>mjstest</title>
+  <link href="./css" rel="stylesheet" type="text/css">
+  <link href="./bootstrap.min.css" rel="stylesheet" type="text/css">
+  <script src="./jquery-2.1.1.min.js" type="application/javascript" defer=""></script>
+  <script src="./lodash.min.js" type="application/javascript" defer=""></script>
+  <script src="./magister.http.js" type="application/javascript" defer=""></script>
+  <script src="./magister-browser-noHttp.js" type="application/javascript" defer=""></script>
+</head>
+
+<body style="margin:25px;">
+  <h1>Magister.js TEST</h1>
+  <p>using <b>https://rsgenkhuizen.magister.net</p>
+
+  <form name="loginForm">
+  Username: <input type="text" name="username"><br><br>
+  Password: <input type="text" name="password"><br><br></b>
+  <input type="submit" value="Submit" onclick="gettyGrades()">
+
+  <input id="clickMe" type="button" value="start" onclick="gettyGrades()" />
+
+  <script>
+  var magisterurl = { url: "https://rsgenkhuizen.magister.net" };
+  var un = document.forms["loginForm"]["username"].value;
+  var pw = document.forms["loginForm"]["password"].value;
+  function gettyGrades() {
+    new Magister.Magister({
+      school: magisterurl,
+      username: un,
+      password: pw
+    }).ready(function () {
+      this.currentCourse(function (error, result) {
+        result.grades(function (error, result) {
+          document.write(result.map(function (g) {
+            return g.grade();
+          }));
+        });
+      });
+    });
+  }
+  </script>
+</body>
+</html>
