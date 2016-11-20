@@ -13,29 +13,28 @@
 </head>
 
 <body style="margin:25px;">
-  <h1>Magister.js TEST</h1>
-  <p>using <b>https://rsgenkhuizen.magister.net</p>
-
-  <form name="loginForm">
-  Username: <input type="text" name="username"><br><br>
-  Password: <input type="text" name="password"><br><br></b>
-  <input type="submit" value="Submit" onclick="gettyGrades()">
-
-  <input id="clickMe" type="button" value="start" onclick="gettyGrades()" />
+  <h1><a href="http://simplyapps.nl/MagisterJS/">Magister.js</a> Testing </h1>
+  <b><span>We don't save your data, it goes directly to Magister.</span>
+  <p>using <a href="https://rsgenkhuizen.magister.net">https://rsgenkhuizen.magister.net</a></p>
+  Username: <input type="text" id="ipun" value="" name="username"><br><br>
+  Password: <input type="password" id="ippw" value="" name="password"><br><br></b>
+  <input id="gg" type="button" value="Start" onclick="gettyGrades()" /><br><br>
+  <div style="font-family:monospace;" id="printgrades"></p>
 
   <script>
   var magisterurl = { url: "https://rsgenkhuizen.magister.net" };
-  var un = document.forms["loginForm"]["username"].value;
-  var pw = document.forms["loginForm"]["password"].value;
+  var un = document.getElementById('ipun');
+  var pw = document.getElementById('ippw');
   function gettyGrades() {
     new Magister.Magister({
       school: magisterurl,
-      username: un,
-      password: pw
+      username: un.value,
+      password: pw.value
     }).ready(function () {
+      alert("Hey, " + this.profileInfo().firstName() + "!");
       this.currentCourse(function (error, result) {
         result.grades(function (error, result) {
-          document.write(result.map(function (g) {
+          document.getElementById('printgrades').innerHTML = "Your grades: <br>" + (result.map(function (g) {
             return g.grade();
           }));
         });
